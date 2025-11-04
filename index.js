@@ -1,8 +1,12 @@
 // Main entry point for the todo backend application
+import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import todoRouter from './routers/todos.js';
+
+// 환경변수 로드
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +26,7 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/todo-a
 mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log('✅ MongoDB 연결 성공');
+    console.log(`📦 데이터베이스: ${mongoose.connection.db.databaseName}`);
   })
   .catch((error) => {
     console.error('❌ MongoDB 연결 실패:', error.message);
